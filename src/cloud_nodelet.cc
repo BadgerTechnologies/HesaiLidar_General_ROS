@@ -20,7 +20,7 @@
 #include "main.cc"
 
 
-namespace pandar_pointcloud
+namespace hesai_lidar
 {
   class CloudNodelet: public nodelet::Nodelet
   {
@@ -41,10 +41,10 @@ namespace pandar_pointcloud
     HesaiLidarClient_.reset(new HesaiLidarClient(getNodeHandle(), getPrivateNodeHandle()));
   }
 
-} // namespace pandar_pointcloud
+} // namespace hesai_lidar
 
 
 // Register this plugin with pluginlib.  Names must match nodelet_pandar.xml.
 //
 // parameters: class type, base class type
-PLUGINLIB_EXPORT_CLASS(pandar_pointcloud::CloudNodelet, nodelet::Nodelet);
+PLUGINLIB_EXPORT_CLASS(hesai_lidar::CloudNodelet, nodelet::Nodelet);

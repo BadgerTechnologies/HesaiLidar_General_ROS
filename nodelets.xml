@@ -1,6 +1,6 @@
 <library path="lib/libcloud_nodelet">
-  <class name="pandar_pointcloud/CloudNodelet"
-         type="pandar_pointcloud::CloudNodelet"
+  <class name="hesai_lidar/CloudNodelet"
+         type="hesai_lidar::CloudNodelet"
          base_class_type="nodelet::Nodelet">
     <description>
       Aggregates points from multiple packets, publishing PointCloud2.
