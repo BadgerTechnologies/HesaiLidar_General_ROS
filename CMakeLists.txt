@@ -19,23 +19,24 @@ find_package(catkin REQUIRED COMPONENTS
     roslib
     std_msgs
     sensor_msgs
-    message_runtime
+    pandar_msgs
+#    message_runtime
     image_transport
     pcl_conversions
-    message_generation
+#    message_generation
     tf
 )
-add_message_files(
-    FILES
-    PandarPacket.msg
-    PandarScan.msg
-)
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-)
+#add_message_files(
+#    FILES
+#    PandarPacket.msg
+#    PandarScan.msg
+#)
+#generate_messages(
+#  DEPENDENCIES
+#  std_msgs
+#)
 catkin_package(
-    CATKIN_DEPENDS message_runtime
+#    CATKIN_DEPENDS message_runtime
 )
 
 ###PandarGeneralRaw

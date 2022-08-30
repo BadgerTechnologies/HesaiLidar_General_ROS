@@ -88,7 +88,7 @@ static int iPointCloudIndex = 0;
 
 PandarGeneral_Internal::PandarGeneral_Internal(
     std::string device_ip, uint16_t lidar_port, uint16_t gps_port,
-    boost::function<void(boost::shared_ptr<PPointCloud>, double, hesai_lidar::PandarScanPtr)> pcl_callback,
+    boost::function<void(boost::shared_ptr<PPointCloud>, double, pandar_msgs::PandarScanPtr)> pcl_callback,
     boost::function<void(double)> gps_callback, uint16_t start_angle, int tz,
     int pcl_type, std::string lidar_type, std::string frame_id, std::string timestampType,
     std::string lidar_correction_file, std::string multicast_ip, bool coordinate_correction_flag,
@@ -141,7 +141,7 @@ PandarGeneral_Internal::PandarGeneral_Internal(
 }
 
 PandarGeneral_Internal::PandarGeneral_Internal(std::string pcap_path, \
-    boost::function<void(boost::shared_ptr<PPointCloud>, double, hesai_lidar::PandarScanPtr)> \
+    boost::function<void(boost::shared_ptr<PPointCloud>, double, pandar_msgs::PandarScanPtr)> \
     pcl_callback, uint16_t start_angle, int tz, int pcl_type, \
     std::string lidar_type, std::string frame_id, std::string timestampType,
     std::string lidar_correction_file, bool coordinate_correction_flag,
@@ -766,8 +766,8 @@ void PandarGeneral_Internal::ProcessLiarPacket() {
   int ret = 0;
 
   boost::shared_ptr<PPointCloud> outMsg(new PPointCloud());
-  hesai_lidar::PandarScanPtr scan(new hesai_lidar::PandarScan);
-  hesai_lidar::PandarPacket rawpacket;
+  pandar_msgs::PandarScanPtr scan(new pandar_msgs::PandarScan);
+  pandar_msgs::PandarPacket rawpacket;
   if(!computeTransformToTarget(ros::Time::now()))
     return;
 
@@ -1863,7 +1863,7 @@ void PandarGeneral_Internal::CalcXTPointXYZIT(HS_LIDAR_XT_Packet *pkt, int block
   }
 }
 
-void PandarGeneral_Internal::EmitBackMessege(char chLaserNumber, boost::shared_ptr<PPointCloud> cld, hesai_lidar::PandarScanPtr scan) {
+void PandarGeneral_Internal::EmitBackMessege(char chLaserNumber, boost::shared_ptr<PPointCloud> cld, pandar_msgs::PandarScanPtr scan) {
   if (pcl_type_) {
     for (int i=0; i<chLaserNumber; i++) {
       for (int j=0; j<PointCloudList[i].size(); j++) {
@@ -1889,7 +1889,7 @@ void PandarGeneral_Internal::EmitBackMessege(char chLaserNumber, boost::shared_p
   }
 }
 
-void PandarGeneral_Internal::PushScanPacket(hesai_lidar::PandarScanPtr scan) {
+void PandarGeneral_Internal::PushScanPacket(pandar_msgs::PandarScanPtr scan) {
   for(int i = 0; i < scan->packets.size(); i++) {
     if (scan->packets[i].data[0] == 0x47 && scan->packets[i].data[1] == 0x74){  //correction file
       if (got_lidar_correction_flag){
@@ -1983,8 +1983,8 @@ void PandarGeneral_Internal::SetEnvironmentVariableTZ(){
   }
 }
 
-hesai_lidar::PandarPacket PandarGeneral_Internal::SaveCorrectionFile(int laserNumber){
-  hesai_lidar::PandarPacket result;
+pandar_msgs::PandarPacket PandarGeneral_Internal::SaveCorrectionFile(int laserNumber){
+  pandar_msgs::PandarPacket result;
   std::stringstream content;
   content<< "Laser id,Elevation,Azimuth" << std::endl;
   for(int i = 0; i < laserNumber; i++){

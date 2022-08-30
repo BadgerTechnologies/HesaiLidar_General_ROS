@@ -16,7 +16,7 @@ public:
   HesaiLidarClient(ros::NodeHandle node, ros::NodeHandle nh)
   {
     lidarPublisher = node.advertise<sensor_msgs::PointCloud2>("pandar", 10);
-    packetPublisher = node.advertise<hesai_lidar::PandarScan>("pandar_packets",10);
+    packetPublisher = node.advertise<pandar_msgs::PandarScan>("pandar_packets",10);
 
     string serverIp;
     int lidarRecvPort;
@@ -102,7 +102,7 @@ public:
     }
   }
 
-  void lidarCallback(boost::shared_ptr<PPointCloud> cld, double timestamp, hesai_lidar::PandarScanPtr scan) // the timestamp from first point cloud of cld
+  void lidarCallback(boost::shared_ptr<PPointCloud> cld, double timestamp, pandar_msgs::PandarScanPtr scan) // the timestamp from first point cloud of cld
   {
     if(m_sPublishType == "both" || m_sPublishType == "points"){
       pcl_conversions::toPCL(ros::Time(timestamp), cld->header.stamp);
@@ -127,7 +127,7 @@ public:
 #endif      
   }
 
-  void scanCallback(const hesai_lidar::PandarScanPtr scan)
+  void scanCallback(const pandar_msgs::PandarScanPtr scan)
   {
     // printf("pandar_packets topic message received,\n");
     hsdk->PushScanPacket(scan);

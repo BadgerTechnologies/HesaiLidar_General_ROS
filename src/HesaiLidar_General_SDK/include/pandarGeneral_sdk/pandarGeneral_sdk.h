@@ -29,7 +29,7 @@
 
 #include "pandarGeneral/pandarGeneral.h"
 #include "pandarGeneral/point_types.h"
-#include "hesai_lidar/PandarScan.h"
+#include "pandar_msgs/PandarScan.h"
 #include <boost/thread.hpp>
 
 //class PandarGeneralSDK_Internal;
@@ -48,7 +48,7 @@ class PandarGeneralSDK {
    */
   PandarGeneralSDK(
       std::string device_ip, const uint16_t lidar_port, const uint16_t gps_port,
-      boost::function<void(boost::shared_ptr<PPointCloud>, double, hesai_lidar::PandarScanPtr)>
+      boost::function<void(boost::shared_ptr<PPointCloud>, double, pandar_msgs::PandarScanPtr)>
           pcl_callback,
       boost::function<void(double)> gps_callback, uint16_t start_angle,
       int tz, int pcl_type, std::string lidar_type, std::string frame_id, std::string timestampType,  // the default timestamp type is LiDAR time
@@ -64,7 +64,7 @@ class PandarGeneralSDK {
    *        frame_id          The frame id of point cloud
    */
   PandarGeneralSDK(std::string pcap_path, \
-      boost::function<void(boost::shared_ptr<PPointCloud>, double, hesai_lidar::PandarScanPtr)> pcl_callback, \
+      boost::function<void(boost::shared_ptr<PPointCloud>, double, pandar_msgs::PandarScanPtr)> pcl_callback, \
       uint16_t start_angle, int tz, int pcl_type, std::string lidar_type, std::string frame_id, std::string timestampType, // the default timestamp type is LiDAR time
       std::string lidar_correction_file, bool coordinate_correction_flag,
       std::string target_frame, std::string fixed_frame); 
@@ -80,7 +80,7 @@ class PandarGeneralSDK {
   void GetCalibrationFromDevice();
   void Start();
   void Stop();
-  void PushScanPacket(hesai_lidar::PandarScanPtr scan);
+  void PushScanPacket(pandar_msgs::PandarScanPtr scan);
 
  private:
   PandarGeneral *pandarGeneral_;
