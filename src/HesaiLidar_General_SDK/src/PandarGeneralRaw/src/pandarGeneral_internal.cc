@@ -20,6 +20,7 @@
 #include "src/pandarGeneral_internal.h"
 #include "log.h"
 #include <sched.h>
+#include <angles/angles.h>
 #include <tf2_ros/transform_listener.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <algorithm>
@@ -1753,6 +1754,9 @@ void PandarGeneral_Internal::CalcQTPointXYZIT(HS_LIDAR_QT_Packet *pkt, int block
     }
     transformPoint(point.x, point.y, point.z);  
     point.intensity = unit.intensity;
+    point.distance = unit.distance;
+    point.elevation = angles::from_degrees(pandarQT_elev_angle_map[i]);
+    point.azimuth = angles::normalize_angle_positive(angles::from_degrees(azimuth/100.0));
 
     if ("realtime" == m_sTimestampType) {
       point.timestamp = m_dPktTimestamp;

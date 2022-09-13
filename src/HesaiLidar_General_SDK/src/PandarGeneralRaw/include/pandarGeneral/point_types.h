@@ -32,7 +32,31 @@ POINT_CLOUD_REGISTER_POINT_STRUCT(
     (float, x, x)(float, y, y)(float, z, z)(float, intensity, intensity)(
         double, timestamp, timestamp)(uint16_t, ring, ring))
 
-typedef PointXYZIT PPoint;
+struct PointXYZITRDEA {
+    PCL_ADD_POINT4D
+    float intensity;
+    double timestamp;
+    uint16_t ring;                      ///< laser ring number, useful for filtering
+    float distance;                     ///< distance of the return
+    float elevation;                    ///< elevation angle
+    float azimuth;                      ///< azimuthal angle
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW // make sure our new allocators are aligned
+} EIGEN_ALIGN16;
+// enforce SSE padding for correct memory alignment
+
+POINT_CLOUD_REGISTER_POINT_STRUCT(PointXYZITRDEA,
+    (float, x, x)
+    (float, y, y)
+    (float, z, z)
+    (float, intensity, intensity)
+    (double, timestamp, timestamp)
+    (uint16_t, ring, ring)
+    (float, distance, distance)
+    (float, elevation, elevation)
+    (float, azimuth, azimuth)
+)
+
+typedef PointXYZITRDEA PPoint;
 typedef pcl::PointCloud<PPoint> PPointCloud;
 
 #endif  // INCLUDE_POINT_TYPES_H_
